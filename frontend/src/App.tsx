@@ -3,7 +3,7 @@ import InputField from "./components/InputField";
 import Button from "./components/button";
 import { ethers } from "ethers";
 import SupplyChain from "SupplyChain.json";
-const contractAddress = " 0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9";
+const contractAddress = "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9";
 const contractABI = SupplyChain.abi
 
 type Item = {
@@ -94,31 +94,31 @@ function App() {
       <div className="h-screen w-full md:max-w-2xl mx-auto flex items-center">
         <div className="w-full rounded overflow-hidden shadow-lg">
           <div className="px-6 py-4">
-            <div className="font-bold text-xl mb-2">Decentralised supply chain tracking application</div>
-            <div className="py-10">
+            <h1 className="font-bold py-4 text-xl text-center">Decentralised supply chain tracking application</h1>
+            <div className="py-10 flex justify-between items-center space-x-3">
               <InputField
                 value={name}
                 onchange={(e: string) => setName(e)}
               />
-              <div className="py-2">
-                <Button title="Order" onClick={orderItem}
+              <Button title="Order" onClick={orderItem}
                 />
-              </div>
             </div>
-            <div>
-              <ul className="mt-4 list-decimal">
-                {items.map((item) => (
-                  <li key={item.id} className="pl-5">
-                    {item.name} - {getStatusText(item.status)}
+            <div className="mt-4 list-decimal">
+                {items.length<1?<p className="pb-5 text-center text-red-600">No Items</p>
+                :items.map((item,i) => (
+                  <div key={i} className={`pl-5 flex justify-between py-3 ${i<items.length-1?'border-b':''}`}>
+                   <p>
+                   <span> {item.name}</span> - 
+                   <span className="font-semibold"> {getStatusText(item.status)}</span>
+                   </p>
                     {item.status === 0 && (
                       <Button
                         title="Cancel"
                         bgColor="bg-red-600"
                         onClick={() => cancelItem(item.id)} />
                     )}
-                  </li>
+                  </div>
                 ))}
-              </ul>
             </div>
           </div>
         </div>
